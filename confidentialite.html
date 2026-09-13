@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<!-- Bibliothèque pour lire et afficher le Markdown dynamiquement -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -25,8 +24,10 @@
       Police Management
     </a>
     <nav class="links">
-      <a href="index.html#fonctionnalites">Fonctionnalités</a>
-      <a href="confidentialite.html">Confidentialité</a>
+      <a href="index.html">Accueil</a>
+      <a href="fonctionnalites.html">Fonctionnalités</a>
+      <a href="urgence.html">Urgence & Support</a>
+      <a href="confidentialite.html" class="active">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
       <a href="connexion.html">Connexion</a>
     </nav>
@@ -58,26 +59,30 @@
       <a href="index.html">Accueil</a>
       <a href="connexion.html">Connexion</a>
       <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
-      <a href="confidentialite.html">Confidentialité</a>
+      <a href="confidentialite.html">Privacy</a>
     </div>
   </div>
 </footer>
 
 <script src="theme.js"></script>
 <script>
-  // Lit le fichier PRIVACY.md dans le dépôt et l'injecte sous forme HTML
-  fetch('PRIVACY.md')
-    .then(response => {
-      if (!response.ok) throw new Error('Fichier non trouvé');
-      return response.text();
-    })
-    .then(markdownText => {
-      document.getElementById('privacy-content').innerHTML = marked.parse(markdownText);
-    })
-    .catch(err => {
-      document.getElementById('privacy-content').innerHTML = 
-        '<p style="color:var(--red);">Impossible de charger le fichier PRIVACY.md. Vérifie qu\'il est bien présent à la racine de ton projet GitHub.</p>';
-    });
+  if (window.location.protocol === 'file:') {
+    document.getElementById('privacy-content').innerHTML = 
+      '<h2>Mode local détecté</h2><p>Le chargement automatique du fichier Markdown via <code>fetch()</code> nécessite d\'être exécuté sur un serveur web (ou GitHub Pages). Une fois vos fichiers envoyés sur GitHub Pages, le contenu du fichier PRIVACY.md s\'affichera automatiquement ici.</p>';
+  } else {
+    fetch('PRIVACY.md')
+      .then(response => {
+        if (!response.ok) throw new Error('Fichier non trouvé');
+        return response.text();
+      })
+      .then(markdownText => {
+        document.getElementById('privacy-content').innerHTML = marked.parse(markdownText);
+      })
+      .catch(err => {
+        document.getElementById('privacy-content').innerHTML = 
+          '<p style="color:var(--red);">Impossible de charger le fichier PRIVACY.md. Vérifiez qu\'il est bien présent à la racine de votre dépôt.</p>';
+      });
+  }
 </script>
 
 </body>

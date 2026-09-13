@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion — Police Management</title>
+<meta name="description" content="Espace de connexion pour Police Management.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -40,23 +41,21 @@
 </header>
 
 <section class="section">
-  <div class="wrap" style="max-width: 440px;">
-    <div class="mockup-card" style="padding: 32px;">
-      <h2 style="margin-bottom: 8px; text-align: center;">Espace Membre</h2>
-      <p style="color:var(--ink-dim); text-align: center; margin-bottom: 24px; font-size: 14px;">Connectez-vous à votre compte</p>
-      
-      <form onsubmit="event.preventDefault(); alert('Espace connexion en maintenance.');">
-        <div style="margin-bottom: 16px;">
-          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Adresse courriel</label>
-          <input type="email" placeholder="nom@exemple.com" required style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg-subtle); color:inherit; box-sizing:border-box;">
-        </div>
-        <div style="margin-bottom: 24px;">
-          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Mot de passe</label>
-          <input type="password" placeholder="••••••••" required style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg-subtle); color:inherit; box-sizing:border-box;">
-        </div>
-        <button type="submit" class="btn primary" style="width: 100%; justify-content: center;">Se connecter</button>
-      </form>
-    </div>
+  <div class="wrap" style="max-width:440px;">
+    <h1 class="section-title" style="text-align:center;">Connexion</h1>
+    <p class="section-desc" style="text-align:center;">Accédez à votre espace administrateur ou agent.</p>
+
+    <form style="margin-top:2rem; background:var(--surface); padding:2rem; border-radius:12px; border:1px solid var(--border);" onsubmit="event.preventDefault();">
+      <div style="margin-bottom:1.2rem;">
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Identifiant / Email</label>
+        <input type="text" placeholder="agent@police-management.ca" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Mot de passe</label>
+        <input type="password" placeholder="••••••••" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+      </div>
+      <button type="submit" class="btn primary" style="width:100%; justify-content:center;">Se connecter</button>
+    </form>
   </div>
 </section>
 
@@ -69,6 +68,7 @@
     <div class="footer-links">
       <a href="index.html">Accueil</a>
       <a href="connexion.html">Connexion</a>
+      <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
       <a href="confidentialite.html">Privacy</a>
     </div>
   </div>
