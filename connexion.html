@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connexion — Police Management</title>
-<meta name="description" content="Demande un accès à Police Management. Ta demande est révisée manuellement par l'administrateur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -23,10 +22,12 @@
       Police Management
     </a>
     <nav class="links">
-      <a href="index.html#fonctionnalites">Fonctionnalités</a>
-      <a href="confidentialite.html">Confidentialité</a>
+      <a href="index.html">Accueil</a>
+      <a href="fonctionnalites.html">Fonctionnalités</a>
+      <a href="urgence.html">Urgence & Support</a>
+      <a href="confidentialite.html">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html" class="active">Connexion</a>
     </nav>
     <div class="nav-right">
       <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
@@ -38,49 +39,24 @@
   </div>
 </header>
 
-<section class="page-header">
-  <div class="wrap">
-    <span class="pill-tag">Demande d'accès</span>
-    <h1>Connexion</h1>
-    <p>Ce site n'a pas de compte en ligne — les comptes de l'application se créent directement dans Police Management, avec ton identifiant Apple. Ce formulaire sert à demander l'accès : l'administrateur révise chaque demande à la main et te répond par courriel.</p>
-    <p class="notice"><strong>Ce n'est pas instantané.</strong> Ta demande est envoyée à police.management@hotmail.com. Une fois approuvée, on te confirme par courriel comment finaliser ton inscription dans l'application.</p>
-  </div>
-</section>
-
 <section class="section">
-  <div class="wrap">
-    <form class="urgence-form" id="access-form" style="--focus-color:var(--indigo-bright); max-width:560px;" novalidate>
-      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off">
-      <div class="field-row">
-        <div class="field" data-field="nom">
-          <label for="a-nom">Nom complet</label>
-          <input type="text" id="a-nom" name="Nom" autocomplete="name">
-          <span class="field-error">Entre ton nom.</span>
+  <div class="wrap" style="max-width: 440px;">
+    <div class="mockup-card" style="padding: 32px;">
+      <h2 style="margin-bottom: 8px; text-align: center;">Espace Membre</h2>
+      <p style="color:var(--ink-dim); text-align: center; margin-bottom: 24px; font-size: 14px;">Connectez-vous à votre compte</p>
+      
+      <form onsubmit="event.preventDefault(); alert('Espace connexion en maintenance.');">
+        <div style="margin-bottom: 16px;">
+          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Adresse courriel</label>
+          <input type="email" placeholder="nom@exemple.com" required style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg-subtle); color:inherit; box-sizing:border-box;">
         </div>
-        <div class="field" data-field="courriel">
-          <label for="a-courriel">Courriel</label>
-          <input type="email" id="a-courriel" name="Courriel" autocomplete="email">
-          <span class="field-error">Entre un courriel valide.</span>
+        <div style="margin-bottom: 24px;">
+          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:6px;">Mot de passe</label>
+          <input type="password" placeholder="••••••••" required style="width:100%; padding:10px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg-subtle); color:inherit; box-sizing:border-box;">
         </div>
-      </div>
-      <div class="field-row">
-        <div class="field" data-field="corps">
-          <label for="a-corps">Corps de police</label>
-          <input type="text" id="a-corps" name="Corps de police" autocomplete="organization">
-          <span class="field-error">Précise ton corps de police.</span>
-        </div>
-        <div class="field" data-field="matricule">
-          <label for="a-matricule">Matricule (facultatif)</label>
-          <input type="text" id="a-matricule" name="Matricule">
-        </div>
-      </div>
-      <div class="field" data-field="message">
-        <label for="a-message">Contexte ou question (facultatif)</label>
-        <textarea id="a-message" name="Message"></textarea>
-      </div>
-      <button type="submit" class="btn-store" id="a-submit" style="align-self:flex-start;">Envoyer la demande</button>
-      <p class="form-status" id="a-status" role="status" aria-live="polite"></p>
-    </form>
+        <button type="submit" class="btn primary" style="width: 100%; justify-content: center;">Se connecter</button>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -92,102 +68,12 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
-      <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
-      <a href="confidentialite.html">Confidentialité</a>
+      <a href="connexion.html">Connexion</a>
+      <a href="confidentialite.html">Privacy</a>
     </div>
   </div>
 </footer>
 
 <script src="theme.js"></script>
-<script>
-(function(){
-  var form = document.getElementById('access-form');
-  var status = document.getElementById('a-status');
-  var submitBtn = document.getElementById('a-submit');
-  var endpoint = 'https://formsubmit.co/ajax/police.management@hotmail.com';
-
-  function setError(fieldName, show){
-    var field = form.querySelector('[data-field="' + fieldName + '"]');
-    if(!field) return;
-    field.classList.toggle('has-error', show);
-  }
-
-  function isValidEmail(v){
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-  }
-
-  function clearErrorOnInput(){
-    var fields = form.querySelectorAll('.field');
-    fields.forEach(function(f){
-      var input = f.querySelector('input, textarea');
-      if(!input) return;
-      input.addEventListener('input', function(){ f.classList.remove('has-error'); });
-    });
-  }
-  clearErrorOnInput();
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    status.textContent = '';
-    status.className = 'form-status';
-
-    var nom = form.querySelector('#a-nom').value.trim();
-    var courriel = form.querySelector('#a-courriel').value.trim();
-    var corps = form.querySelector('#a-corps').value.trim();
-    var matricule = form.querySelector('#a-matricule').value.trim();
-    var message = form.querySelector('#a-message').value.trim();
-    var honey = form.querySelector('[name="_honey"]').value;
-
-    var valid = true;
-    setError('nom', nom === ''); if(nom === '') valid = false;
-    setError('courriel', !isValidEmail(courriel)); if(!isValidEmail(courriel)) valid = false;
-    setError('corps', corps === ''); if(corps === '') valid = false;
-
-    if(!valid){
-      status.textContent = 'Complète les champs en rouge avant d\'envoyer.';
-      status.classList.add('err');
-      return;
-    }
-
-    if(honey !== ''){ return; }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Envoi en cours…';
-
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        Nom: nom,
-        Courriel: courriel,
-        'Corps de police': corps,
-        Matricule: matricule || 'Non précisé',
-        Message: message || '(aucun)',
-        _subject: 'Demande d\'accès — Police Management'
-      })
-    })
-    .then(function(res){ return res.json().then(function(data){ return { ok: res.ok, data: data }; }); })
-    .then(function(result){
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Envoyer la demande';
-      if(result.ok){
-        status.textContent = 'Demande envoyée. Tu recevras une réponse par courriel.';
-        status.classList.add('ok');
-        form.reset();
-      } else {
-        status.textContent = 'L\'envoi a échoué. Réessaie ou écris directement à police.management@hotmail.com.';
-        status.classList.add('err');
-      }
-    })
-    .catch(function(){
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Envoyer la demande';
-      status.textContent = 'L\'envoi a échoué. Réessaie ou écris directement à police.management@hotmail.com.';
-      status.classList.add('err');
-    });
-  });
-})();
-</script>
-
 </body>
 </html>

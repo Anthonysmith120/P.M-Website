@@ -1,8 +1,10 @@
  # Politique de confidentialité — Police Management
 
-**Dernière mise à jour : 1ᵉʳ septembre 2026 (version 2026.09.01)**
+**Dernière mise à jour : 13 septembre 2026 (version 2026.09.13)**
 
 Police Management est une application de coordination du travail destinée au personnel policier du Canada. Elle ne vise aucun corps de police en particulier. La présente politique est rédigée conformément à la **Loi modernisant des dispositions législatives en matière de protection des renseignements personnels (« Loi 25 », Québec)** et décrit quels renseignements l'application traite, comment ils sont protégés et quels sont vos droits.
+
+👉 **Visitez le site web officiel de l'application : https://anthonysmith120.github.io/P.M-Website/** — fonctionnalités, nouveautés, soutien et politique de confidentialité complète.
 
 ## 1. Responsable de la protection des renseignements personnels
 
@@ -19,8 +21,11 @@ Lors de la création de votre compte, votre consentement à la collecte et à l'
 | Profil : prénom, nom, courriel, matricule, grade, corps de police, unité/poste, équipe | Créer et gérer votre compte, contrôler l'accès |
 | Horaire, rotation et catégories de quart | Afficher votre calendrier et, si vous le partagez, l'horaire d'équipe |
 | Photo de profil (facultative) | Personnaliser votre profil |
+| Publications au Forum : titre, texte et nom d'auteur des sujets et réponses | Permettre les échanges entre membres d'un même corps de police |
+| Idées : demandes de nouveautés, réponses aux sondages et votes (texte, nom d'auteur, choix de vote) | Recueillir, soutenir et prioriser les suggestions d'amélioration |
 | Commentaires envoyés à l'administrateur | Soutien et amélioration |
-| Mot de passe applicatif | Sécuriser l'accès — conservé uniquement sous forme de hachage cryptographique |
+| Clé publique de chiffrement (Curve25519) | Chiffrement de bout en bout des contenus partagés (photo, horaire, forum, idées) |
+| Mot de passe applicatif | Sécuriser l'accès — conservé uniquement sous forme de hachage cryptographique salé |
 | Horodatage de dernière activité | Indicateur en ligne / hors ligne, visible uniquement par l'administrateur |
 
 L'application n'utilise **aucun** outil publicitaire, **aucun** service d'analyse ou de mesure, **aucun** profilage, et ne vend ni ne communique vos renseignements à des tiers à des fins commerciales.
@@ -47,18 +52,20 @@ Les données sont cloisonnées : les membres d'un corps de police ne voient que 
 
 ## 8. Sécurité
 
-Les données sont chiffrées **en transit et au repos** par Apple. La photo de profil et l'horaire partagé avec votre poste sont de plus chiffrés par l'application (**AES-256-GCM**) avant l'envoi. L'accès à l'application peut être verrouillé par Face ID.
+Les données sont chiffrées **en transit et au repos** par Apple. De plus, l'application chiffre elle-même (**AES-256-GCM**) avant l'envoi : la photo de profil, l'horaire partagé avec votre poste, les publications du forum (titre, texte, nom d'auteur), les idées et suggestions, ainsi que les commentaires envoyés à l'administrateur. Une clé publique (**Curve25519**) est associée à votre compte pour le chiffrement de bout en bout des contenus partagés. Le mot de passe applicatif n'est jamais conservé en clair : seul un **hachage SHA-256 salé** est stocké. L'accès à l'application peut être verrouillé par Face ID.
 
 ## 9. Qui voit quoi
 
-- Les membres de votre **unité**, au sein de votre corps de police, voient votre nom, votre équipe et votre horaire partagé (sans vos notes personnelles).
-- L'**administrateur** voit les profils, l'état des comptes et les commentaires, et est avisé lorsqu'un utilisateur modifie son profil.
+- Les membres de votre **unité**, au sein de votre corps de police, voient votre nom, votre équipe et votre horaire partagé (sans vos notes personnelles ni vos événements personnels).
+- Les membres de votre **corps de police** voient vos publications au **Forum** et vos **idées/demandes** (avec votre nom d'auteur), ainsi que les votes de façon agrégée. Aucun autre corps de police n'y a accès (cloisonnement).
+- L'**administrateur** voit les profils, l'état des comptes, les commentaires, les publications du forum et les idées, et est avisé lorsqu'un utilisateur modifie son profil.
 - Personne d'autre n'a accès à vos renseignements.
 
 ## 10. Conservation, suppression et retrait du consentement
 
 - Vos renseignements sont conservés tant que votre compte est actif.
 - Vous pouvez **supprimer votre compte** à tout moment dans l'application (Réglages → Modifier mon profil → Supprimer mon compte) : votre profil et votre horaire partagé sont alors effacés définitivement. La suppression de votre compte vaut retrait de votre consentement.
+- Vous pouvez supprimer vos propres publications au forum et vos idées; l'administrateur peut également les retirer.
 - Les commentaires déjà envoyés à l'administrateur peuvent subsister; vous pouvez en demander la suppression au responsable.
 - L'administrateur peut également supprimer un compte, ce qui en retire l'accès.
 
@@ -87,4 +94,4 @@ Les textes de loi consultables dans l'application proviennent de sources officie
 
 ## 15. Modifications
 
-La présente politique est publiée à l'adresse **https://anthonysmith120.github.io/Police-Management/confidentialite.html**. Toute modification y sera publiée et signalée dans l'application. En cas de changement important aux finalités ou aux renseignements recueillis, un nouveau consentement sera demandé.
+La présente politique est publiée sur le site web de l'application, à l'adresse **https://anthonysmith120.github.io/P.M-Website/confidentialite.html**. Toute modification y sera publiée et signalée dans l'application. En cas de changement important aux finalités ou aux renseignements recueillis, un nouveau consentement sera demandé.
