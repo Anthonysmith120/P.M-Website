@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TicketStay — La plateforme de gestion nouvelle génération</title>
-<meta name="description" content="Découvrez TicketStay. Une expérience fluide, moderne et interactive.">
+<title>Police Management — La plateforme de gestion nouvelle génération</title>
+<meta name="description" content="Découvrez Police Management. Une expérience fluide, moderne et sécurisée.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,9 +14,9 @@
     --bg-dark: #0b0f19;
     --card-bg: rgba(255, 255, 255, 0.03);
     --card-border: rgba(255, 255, 255, 0.08);
-    --primary: #6366f1;
-    --primary-glow: rgba(99, 102, 241, 0.4);
-    --accent: #06b6d4;
+    --primary: #3b82f6;
+    --primary-glow: rgba(59, 130, 246, 0.4);
+    --accent: #1d4ed8;
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
   }
@@ -59,12 +59,18 @@
     padding: 1rem 2rem;
   }
   .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-weight: 800;
-    font-size: 1.4rem;
-    background: linear-gradient(135deg, #fff 30%, var(--primary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: 1.3rem;
+    color: #fff;
     text-decoration: none;
+  }
+  .logo svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--primary);
   }
   .nav-links { display: flex; gap: 2rem; align-items: center; }
   .nav-links a {
@@ -85,7 +91,7 @@
   }
   .btn-nav:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
   }
 
   /* Hero Section */
@@ -107,9 +113,9 @@
     gap: 0.5rem;
     padding: 0.4rem 1rem;
     border-radius: 50px;
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.3);
-    color: #a5b4fc;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 1.5rem;
@@ -124,7 +130,7 @@
     letter-spacing: -0.02em;
   }
   h1 span {
-    background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 100%);
+    background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -157,7 +163,7 @@
   }
   .btn-hero.primary:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
   }
   .btn-hero.secondary {
     background: var(--card-bg);
@@ -197,13 +203,13 @@
     cursor: pointer;
   }
   .card:hover {
-    border-color: rgba(99, 102, 241, 0.4);
+    border-color: rgba(59, 130, 246, 0.4);
   }
   .card-icon {
     width: 50px;
     height: 50px;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(6, 182, 212, 0.2));
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(29, 78, 216, 0.2));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -232,9 +238,17 @@
 
 <header>
   <div class="nav-container">
-    <a href="index.html" class="logo">TicketStay</a>
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L20 5.5V11C20 16 16.6 20.2 12 22C7.4 20.2 4 16 4 11V5.5L12 2Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Police Management
+    </a>
     <nav class="nav-links">
       <a href="fonctionnalites.html">Fonctionnalités</a>
+      <a href="urgence.html">Urgence & Support</a>
+      <a href="confidentialite.html">Privacy</a>
+      <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
       <a href="connexion.html" class="btn-nav">Espace Membre</a>
     </nav>
   </div>
@@ -245,12 +259,12 @@
 
 <section class="hero">
   <div class="hero-content">
-    <div class="badge-new">✨ Nouvelle mise à jour disponible</div>
-    <h1>L'expérience ultime pour <span>vos réservations</span></h1>
-    <p class="subtitle">Une interface ultra-rapide, un design immersif et une gestion simplifiée. Prenez le contrôle dès aujourd'hui.</p>
+    <div class="badge-new">✨ Nouvelle version disponible</div>
+    <h1>La plateforme moderne pour <span>Police Management</span></h1>
+    <p class="subtitle">Une interface ultra-rapide, sécurisée et intuitive. Gérez vos accès et vos outils en toute simplicité.</p>
     <div class="cta-group">
-      <a href="connexion.html" class="btn-hero primary">Commencer maintenant</a>
-      <a href="fonctionnalites.html" class="btn-hero secondary">En savoir plus</a>
+      <a href="connexion.html" class="btn-hero primary">Accéder à l'Espace Membre</a>
+      <a href="fonctionnalites.html" class="btn-hero secondary">Découvrir les fonctionnalités</a>
     </div>
   </div>
 </section>
@@ -260,20 +274,20 @@
     
     <div class="card" data-tilt>
       <div class="card-icon">⚡</div>
-      <h3>Vitesse Fulgurante</h3>
-      <p>Optimisé pour charger en une fraction de seconde, offrant une fluidité parfaite à chaque interaction.</p>
+      <h3>Rapidité Opérationnelle</h3>
+      <p>Une expérience optimisée au millimètre près pour un chargement instantané et une efficacité maximale.</p>
     </div>
 
     <div class="card" data-tilt>
       <div class="card-icon">🛡️</div>
-      <h3>Sécurité Renforcée</h3>
-      <p>Vos données sont protégées par les meilleurs standards de chiffrement moderne.</p>
+      <h3>Sécurité Intégrale</h3>
+      <p>Des connexions chiffrées et une gestion des autorisations rigoureuse pour vos données.</p>
     </div>
 
     <div class="card" data-tilt>
-      <div class="card-icon">🎨</div>
-      <h3>Design Intelligents</h3>
-      <p>Une interface épurée pensée pour offrir la meilleure expérience utilisateur possible.</p>
+      <div class="card-icon">📊</div>
+      <h3>Interface Claire</h3>
+      <p>Un tableau de bord moderne et ergonomique conçu pour faciliter la prise en main.</p>
     </div>
 
   </div>
@@ -306,14 +320,12 @@
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       this.size = Math.random() * 2 + 1;
-      this.baseX = this.x;
-      this.baseY = this.y;
       this.vx = (Math.random() - 0.5) * 1;
       this.vy = (Math.random() - 0.5) * 1;
     }
 
     draw() {
-      ctx.fillStyle = 'rgba(165, 180, 252, 0.7)';
+      ctx.fillStyle = 'rgba(147, 197, 253, 0.7)';
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.closePath();
@@ -327,7 +339,6 @@
       if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
       if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-      // Interaction avec la souris
       let dx = mouse.x - this.x;
       let dy = mouse.y - this.y;
       let distance = Math.sqrt(dx * dx + dy * dy);
@@ -348,7 +359,6 @@
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Relier les particules proches
     for (let a = 0; a < particles.length; a++) {
       for (let b = a; b < particles.length; b++) {
         let dx = particles[a].x - particles[b].x;
@@ -356,7 +366,7 @@
         let dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < 120) {
-          ctx.strokeStyle = `rgba(99, 102, 241, ${1 - dist / 120})`;
+          ctx.strokeStyle = `rgba(59, 130, 246, ${1 - dist / 120})`;
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           ctx.moveTo(particles[a].x, particles[a].y);
@@ -386,8 +396,8 @@
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       
-      const tiltX = (y / rect.height) * -20;
-      const tiltY = (x / rect.width) * 20;
+      const tiltX = (y / rect.height) * -18;
+      const tiltY = (x / rect.width) * 18;
 
       card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
     });
