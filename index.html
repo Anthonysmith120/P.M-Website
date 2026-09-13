@@ -3,33 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Police Management — La plateforme de gestion nouvelle génération</title>
-<meta name="description" content="Découvrez Police Management. Une expérience fluide, moderne et sécurisée.">
+<title>Accueil — Police Management</title>
+<meta name="description" content="Plateforme indépendante d'information et d'outils pour les passionnés et professionnels de la gestion policière.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
 <style>
-  :root {
-    --bg-dark: #0b0f19;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --primary: #3b82f6;
-    --primary-glow: rgba(59, 130, 246, 0.4);
-    --accent: #1d4ed8;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    overflow-x: hidden;
-  }
-
-  /* Canvas de fond interactif */
+  /* Canvas interactif en arrière-plan */
   #hero-canvas {
     position: absolute;
     top: 0;
@@ -40,263 +22,148 @@
     pointer-events: none;
   }
 
-  /* Navigation */
-  header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-    background: rgba(11, 15, 25, 0.7);
-    border-bottom: 1px solid var(--card-border);
-  }
-  .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-weight: 800;
-    font-size: 1.3rem;
-    color: #fff;
-    text-decoration: none;
-  }
-  .logo svg {
-    width: 24px;
-    height: 24px;
-    stroke: var(--primary);
-  }
-  .nav-links { display: flex; gap: 2rem; align-items: center; }
-  .nav-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: #fff; }
-  .btn-nav {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: #fff !important;
-    padding: 0.6rem 1.4rem;
-    border-radius: 50px;
-    font-weight: 600;
-    box-shadow: 0 4px 20px var(--primary-glow);
-    transition: transform 0.2s, box-shadow 0.2s !important;
-  }
-  .btn-nav:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
-  }
-
-  /* Hero Section */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 8rem 1.5rem 4rem;
-    z-index: 2;
-  }
-  .hero-content { max-width: 850px; }
-  
-  .badge-new {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem;
-    border-radius: 50px;
-    background: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    color: #93c5fd;
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    animation: pulse 2s infinite;
-  }
-
-  h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
-  }
-  h1 span {
-    background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .subtitle {
-    font-size: 1.25rem;
-    color: var(--text-muted);
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
-  }
-
-  .cta-group {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-hero {
-    padding: 1rem 2.2rem;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .btn-hero.primary {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    color: #fff;
-    box-shadow: 0 10px 30px var(--primary-glow);
-  }
-  .btn-hero.primary:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
-  }
-  .btn-hero.secondary {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    color: #fff;
-    backdrop-filter: blur(10px);
-  }
-  .btn-hero.secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    transform: translateY(-3px);
-  }
-
-  /* Section Grille 3D Interactive */
-  .features-section {
+  .hero-interactive {
     position: relative;
     z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 6rem 1.5rem;
   }
-  .grid {
+
+  /* Cartes 3D interactives */
+  .grid-interactive {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
   }
 
-  /* Effet Card 3D Tilt */
-  .card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    padding: 2.5rem;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    transition: transform 0.1s ease, border-color 0.3s ease;
+  .card-3d {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: transform 0.1s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     transform-style: preserve-3d;
     perspective: 1000px;
     cursor: pointer;
   }
-  .card:hover {
-    border-color: rgba(59, 130, 246, 0.4);
-  }
-  .card-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(29, 78, 216, 0.2));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    transform: translateZ(30px);
-  }
-  .card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.8rem;
-    transform: translateZ(20px);
-  }
-  .card p {
-    color: var(--text-muted);
-    line-height: 1.6;
-    transform: translateZ(10px);
+
+  .card-3d:hover {
+    border-color: var(--brand-blue);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  .card-3d-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    transform: translateZ(30px);
+  }
+
+  .card-3d h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    transform: translateZ(20px);
+  }
+
+  .card-3d p {
+    color: var(--ink-dim);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    transform: translateZ(10px);
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="nav-container">
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L20 5.5V11C20 16 16.6 20.2 12 22C7.4 20.2 4 16 4 11V5.5L12 2Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+<!-- En-tête de navigation original conservé -->
+<header class="site-nav">
+  <div class="nav-row">
+    <a href="index.html" class="brand" style="text-decoration:none;">
+      <span class="badge-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L20 5.5V11C20 16 16.6 20.2 12 22C7.4 20.2 4 16 4 11V5.5L12 2Z" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+        </svg>
+      </span>
       Police Management
     </a>
-    <nav class="nav-links">
+    <nav class="links">
+      <a href="index.html" class="active">Accueil</a>
       <a href="fonctionnalites.html">Fonctionnalités</a>
       <a href="urgence.html">Urgence & Support</a>
       <a href="confidentialite.html">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-      <a href="connexion.html" class="btn-nav">Espace Membre</a>
+      <a href="connexion.html">Espace Membre</a>
     </nav>
+    <div class="nav-right">
+      <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Changer de thème">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
   </div>
 </header>
 
-<!-- Canvas réactif pour les particules -->
+<!-- Animation Canvas interactif -->
 <canvas id="hero-canvas"></canvas>
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="badge-new">✨ Nouvelle version disponible</div>
-    <h1>La plateforme moderne pour <span>Police Management</span></h1>
-    <p class="subtitle">Une interface ultra-rapide, sécurisée et intuitive. Gérez vos accès et vos outils en toute simplicité.</p>
-    <div class="cta-group">
-      <a href="connexion.html" class="btn-hero primary">Accéder à l'Espace Membre</a>
-      <a href="fonctionnalites.html" class="btn-hero secondary">Découvrir les fonctionnalités</a>
+<!-- Section Hero -->
+<section class="hero hero-interactive">
+  <div class="wrap" style="text-align: center;">
+    <h1 class="hero-title">Plateforme moderne de gestion & d'information</h1>
+    <p class="hero-desc" style="max-width: 650px; margin: 1rem auto 2rem;">
+      Police Management centralise vos outils, informations et suivis dans une interface rapide, fluide et accessible sur tous vos appareils.
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="connexion.html" class="btn primary">Accéder à l'Espace Membre</a>
+      <a href="fonctionnalites.html" class="btn secondary">Voir les fonctionnalités</a>
     </div>
   </div>
 </section>
 
-<section class="features-section">
-  <div class="grid">
-    
-    <div class="card" data-tilt>
-      <div class="card-icon">⚡</div>
-      <h3>Rapidité Opérationnelle</h3>
-      <p>Une expérience optimisée au millimètre près pour un chargement instantané et une efficacité maximale.</p>
-    </div>
+<!-- Section avec cartes 3D -->
+<section class="section hero-interactive" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="grid-interactive">
+      
+      <div class="card-3d">
+        <div class="card-3d-icon">⚡</div>
+        <h3>Haute Performance</h3>
+        <p>Une expérience réactive et optimisée pour charger en un instant, peu importe votre appareil.</p>
+      </div>
 
-    <div class="card" data-tilt>
-      <div class="card-icon">🛡️</div>
-      <h3>Sécurité Intégrale</h3>
-      <p>Des connexions chiffrées et une gestion des autorisations rigoureuse pour vos données.</p>
-    </div>
+      <div class="card-3d">
+        <div class="card-3d-icon">🛡️</div>
+        <h3>Accès Securisé</h3>
+        <p>Gestion stricte des autorisations et protection des données d'accès membres.</p>
+      </div>
 
-    <div class="card" data-tilt>
-      <div class="card-icon">📊</div>
-      <h3>Interface Claire</h3>
-      <p>Un tableau de bord moderne et ergonomique conçu pour faciliter la prise en main.</p>
-    </div>
+      <div class="card-3d">
+        <div class="card-3d-icon">📲</div>
+        <h3>Disponible sur App Store</h3>
+        <p>Retrouvez l'application mobile dédiée directement sur iOS pour un accès rapide sur le terrain.</p>
+      </div>
 
+    </div>
   </div>
 </section>
 
+<footer>
+  <div class="wrap footer-row">
+    <div>
+      <div class="footer-brand">Police Management</div>
+      <p class="footer-disclaimer">Application indépendante, non affiliée à un corps de police ni à un organisme gouvernemental.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="connexion.html">Espace Membre</a>
+      <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
+      <a href="confidentialite.html">Privacy</a>
+    </div>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
 <script>
-  /* --------------------------------------------------
-     1. Animation Canvas Interactif (Particules & Souris)
-  -------------------------------------------------- */
+  /* Particules Canvas dynamiques */
   const canvas = document.getElementById('hero-canvas');
   const ctx = canvas.getContext('2d');
 
@@ -308,7 +175,7 @@
   window.addEventListener('resize', resizeCanvas);
 
   const particles = [];
-  const mouse = { x: null, y: null, radius: 150 };
+  const mouse = { x: null, y: null, radius: 140 };
 
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.x;
@@ -320,12 +187,12 @@
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       this.size = Math.random() * 2 + 1;
-      this.vx = (Math.random() - 0.5) * 1;
-      this.vy = (Math.random() - 0.5) * 1;
+      this.vx = (Math.random() - 0.5) * 0.8;
+      this.vy = (Math.random() - 0.5) * 0.8;
     }
 
     draw() {
-      ctx.fillStyle = 'rgba(147, 197, 253, 0.7)';
+      ctx.fillStyle = 'rgba(59, 130, 246, 0.4)';
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.closePath();
@@ -346,13 +213,13 @@
         const force = (mouse.radius - distance) / mouse.radius;
         const directionX = dx / distance;
         const directionY = dy / distance;
-        this.x -= directionX * force * 5;
-        this.y -= directionY * force * 5;
+        this.x -= directionX * force * 4;
+        this.y -= directionY * force * 4;
       }
     }
   }
 
-  for (let i = 0; i < 70; i++) {
+  for (let i = 0; i < 65; i++) {
     particles.push(new Particle());
   }
 
@@ -365,8 +232,8 @@
         let dy = particles[a].y - particles[b].y;
         let dist = Math.sqrt(dx * dx + dy * dy);
 
-        if (dist < 120) {
-          ctx.strokeStyle = `rgba(59, 130, 246, ${1 - dist / 120})`;
+        if (dist < 110) {
+          ctx.strokeStyle = `rgba(59, 130, 246, ${0.3 - dist / 360})`;
           ctx.lineWidth = 0.5;
           ctx.beginPath();
           ctx.moveTo(particles[a].x, particles[a].y);
@@ -385,19 +252,16 @@
   }
   animate();
 
-  /* --------------------------------------------------
-     2. Effet 3D Tilt sur les cartes au survol
-  -------------------------------------------------- */
-  const cards = document.querySelectorAll('.card');
-
+  /* Effet Tilt 3D au survol des cartes */
+  const cards = document.querySelectorAll('.card-3d');
   cards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       
-      const tiltX = (y / rect.height) * -18;
-      const tiltY = (x / rect.width) * 18;
+      const tiltX = (y / rect.height) * -15;
+      const tiltY = (x / rect.width) * 15;
 
       card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
     });
@@ -407,6 +271,5 @@
     });
   });
 </script>
-
 </body>
 </html>
