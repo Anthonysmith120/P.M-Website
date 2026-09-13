@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Connexion — Police Management</title>
-<meta name="description" content="Espace de connexion pour Police Management.">
+<title>Espace Administration — Police Management</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -28,7 +27,7 @@
       <a href="urgence.html">Urgence & Support</a>
       <a href="confidentialite.html">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-      <a href="connexion.html" class="active">Connexion</a>
+      <a href="connexion.html" class="active">Espace Membre</a>
     </nav>
     <div class="nav-right">
       <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
@@ -41,21 +40,49 @@
 </header>
 
 <section class="section">
-  <div class="wrap" style="max-width:440px;">
-    <h1 class="section-title" style="text-align:center;">Connexion</h1>
-    <p class="section-desc" style="text-align:center;">Accédez à votre espace administrateur ou agent.</p>
+  <div class="wrap" style="max-width:500px;">
+    
+    <!-- Formulaire d'accès Administrateur -->
+    <div id="login-box">
+      <h1 class="section-title" style="text-align:center;">Accès Administrateur</h1>
+      <p class="section-desc" style="text-align:center;">Connexion réservée à la gestion de la plateforme.</p>
 
-    <form style="margin-top:2rem; background:var(--surface); padding:2rem; border-radius:12px; border:1px solid var(--border);" onsubmit="event.preventDefault();">
-      <div style="margin-bottom:1.2rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Identifiant / Email</label>
-        <input type="text" placeholder="agent@police-management.ca" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+      <form id="admin-login-form" style="margin-top:2rem; background:var(--surface); padding:2rem; border-radius:12px; border:1px solid var(--border);">
+        <div style="margin-bottom:1.2rem;">
+          <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Adresse courriel administrateur</label>
+          <input type="email" id="admin-email" placeholder="police.management@hotmail.com" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Code de sécurité</label>
+          <input type="password" id="admin-code" placeholder="••••" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+        </div>
+
+        <button type="submit" class="btn primary" style="width:100%; justify-content:center;">Se connecter</button>
+        <p id="error-msg" style="color:#ef4444; font-size:0.85rem; text-align:center; margin-top:1rem; display:none;">Accès refusé. Courriel ou code incorrect.</p>
+      </form>
+    </div>
+
+    <!-- Tableau de bord (Masqué par défaut) -->
+    <div id="admin-dashboard" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2>Tableau de bord Admin</h2>
+        <button id="btn-logout" class="btn secondary" style="padding:0.4rem 0.8rem; font-size:0.85rem;">Déconnexion</button>
       </div>
-      <div style="margin-bottom:1.5rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Mot de passe</label>
-        <input type="password" placeholder="••••••••" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+
+      <div style="background:var(--surface); padding:1.5rem; border-radius:12px; border:1px solid var(--border);">
+        <h3>Gestion des requêtes reçues</h3>
+        <p style="color:var(--ink-dim); font-size:0.9rem; margin-top:0.5rem;">
+          Toutes les requêtes envoyées via la page Urgence & Support sont automatiquement acheminées vers <strong>police.management@hotmail.com</strong>.
+        </p>
+        <div style="margin-top:1.5rem;">
+          <a href="https://outlook.live.com/" target="_blank" rel="noopener" class="btn primary" style="display:inline-block; text-decoration:none;">
+            Ouvrir la boîte Hotmail pour répondre aux requêtes ↗
+          </a>
+        </div>
       </div>
-      <button type="submit" class="btn primary" style="width:100%; justify-content:center;">Se connecter</button>
-    </form>
+    </div>
+
   </div>
 </section>
 
@@ -67,7 +94,7 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
-      <a href="connexion.html">Connexion</a>
+      <a href="connexion.html">Espace Membre</a>
       <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
       <a href="confidentialite.html">Privacy</a>
     </div>
@@ -75,5 +102,40 @@
 </footer>
 
 <script src="theme.js"></script>
+<script>
+  const loginForm = document.getElementById('admin-login-form');
+  const loginBox = document.getElementById('login-box');
+  const dashboard = document.getElementById('admin-dashboard');
+  const errorMsg = document.getElementById('error-msg');
+  const btnLogout = document.getElementById('btn-logout');
+
+  // Vérification de la session
+  if (sessionStorage.getItem('isAdmin') === 'true') {
+    loginBox.style.display = 'none';
+    dashboard.style.display = 'block';
+  }
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('admin-email').value.trim();
+    const code = document.getElementById('admin-code').value.trim();
+
+    // Validation stricte de ton courriel et de ton code 1887
+    if (email === 'police.management@hotmail.com' && code === '1887') {
+      sessionStorage.setItem('isAdmin', 'true');
+      loginBox.style.display = 'none';
+      dashboard.style.display = 'block';
+      errorMsg.style.display = 'none';
+    } else {
+      errorMsg.style.display = 'block';
+    }
+  });
+
+  btnLogout.addEventListener('click', () => {
+    sessionStorage.removeItem('isAdmin');
+    dashboard.style.display = 'none';
+    loginBox.style.display = 'block';
+  });
+</script>
 </body>
 </html>
