@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urgence & Support — Police Management</title>
+<title>Signaler un problème — Police Management</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,10 +24,9 @@
     <nav class="links">
       <a href="index.html">Accueil</a>
       <a href="fonctionnalites.html">Fonctionnalités</a>
-      <a href="urgence.html" class="active">Urgence & Support</a>
+      <a href="urgence.html" class="active">Signaler un problème</a>
       <a href="confidentialite.html">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-      <a href="connexion.html">Espace Membre</a>
     </nav>
     <div class="nav-right">
       <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
@@ -40,35 +39,31 @@
 </header>
 
 <section class="section">
-  <div class="wrap" style="max-width:600px;">
-    <h1 class="section-title" style="text-align:center;">Signaler un problème</h1>
-    <p class="section-desc" style="text-align:center;">Remplissez ce formulaire pour transmettre votre requête directement à l'administration.</p>
+  <div class="wrap" style="max-width:550px;">
+    <h1 class="section-title" style="text-align:center;">Un problème avec l'application ?</h1>
+    <p class="section-desc" style="text-align:center;">Remplissez le formulaire ci-dessous. Votre message sera immédiatement transmis à l'administrateur par courriel.</p>
 
-    <!-- Remplace VOTRE_ID_FORMSPREE par ton identifiant gratuit Formspree lié à police.management@hotmail.com -->
-    <form action="https://formspree.io/f/police.management@hotmail.com" method="POST" style="margin-top:2rem; background:var(--surface); padding:2rem; border-radius:12px; border:1px solid var(--border);">
+    <!-- Remplace ID_FORMSPREE par ton identifiant de clé Formspree (ex: f/xwyzpqab) -->
+    <form action="https://formspree.io/f/ID_FORMSPREE" method="POST" style="margin-top:2rem; background:var(--surface); padding:2rem; border-radius:12px; border:1px solid var(--border);">
       
       <div style="margin-bottom:1.2rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Votre Nom / Identifiant</label>
-        <input type="text" name="nom" placeholder="Ex: Agent Tremblay" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Nom / Identifiant</label>
+        <input type="text" name="Nom" placeholder="Votre nom" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
       </div>
 
       <div style="margin-bottom:1.2rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Votre Courriel de réponse</label>
-        <input type="email" name="email" placeholder="votre.courriel@exemple.ca" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Votre courriel (pour recevoir la réponse)</label>
+        <input type="email" name="Courriel_Reponse" placeholder="exemple@courriel.com" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
       </div>
 
       <div style="margin-bottom:1.2rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Sujet du problème</label>
-        <select name="sujet" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required>
-          <option value="Bug technique">Bug / Erreur technique</option>
-          <option value="Demande d'accès">Demande d'accès au compte</option>
-          <option value="Autre">Autre demande</option>
-        </select>
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Votre numéro de téléphone (optionnel)</label>
+        <input type="tel" name="Telephone_Utilisateur" placeholder="514-000-0000" style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);">
       </div>
 
       <div style="margin-bottom:1.5rem;">
-        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Description détaillée</label>
-        <textarea name="message" rows="5" placeholder="Décrivez votre problème ici..." style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required></textarea>
+        <label style="display:block; margin-bottom:0.4rem; font-size:0.9rem; font-weight:600;">Description du problème</label>
+        <textarea name="Message_Erreur" rows="5" placeholder="Expliquez ce qui ne fonctionne pas..." style="width:100%; padding:0.75rem; border-radius:6px; border:1px solid var(--border); background:var(--bg); color:var(--ink);" required></textarea>
       </div>
 
       <button type="submit" class="btn primary" style="width:100%; justify-content:center;">Envoyer le signalement</button>
@@ -84,7 +79,7 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
-      <a href="connexion.html">Espace Membre</a>
+      <a href="urgence.html">Signaler un problème</a>
       <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
       <a href="confidentialite.html">Privacy</a>
     </div>
