@@ -3,77 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accueil — Police Management</title>
-<meta name="description" content="Plateforme indépendante d'information et d'outils pour les passionnés et professionnels de la gestion policière.">
+<title>Police Management — Plateforme de gestion pour patrouilleurs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
 <style>
-  /* Canvas interactif en arrière-plan */
-  #hero-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .hero-interactive {
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Cartes 3D interactives */
-  .grid-interactive {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-
-  .card-3d {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    border-radius: 12px;
-    transition: transform 0.1s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    cursor: pointer;
-  }
-
-  .card-3d:hover {
-    border-color: var(--brand-blue);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  }
-
-  .card-3d-icon {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    transform: translateZ(30px);
-  }
-
-  .card-3d h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    transform: translateZ(20px);
-  }
-
-  .card-3d p {
-    color: var(--ink-dim);
-    line-height: 1.5;
-    font-size: 0.95rem;
-    transform: translateZ(10px);
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding: 4rem 0; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; text-align: left; }
+  .feature-card img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
+  .badge-tag { display: inline-block; background: #3b82f620; color: #60a5fa; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<!-- En-tête de navigation original conservé -->
 <header class="site-nav">
   <div class="nav-row">
     <a href="index.html" class="brand" style="text-decoration:none;">
@@ -87,10 +34,9 @@
     <nav class="links">
       <a href="index.html" class="active">Accueil</a>
       <a href="fonctionnalites.html">Fonctionnalités</a>
-      <a href="urgence.html">Urgence & Support</a>
+      <a href="urgence.html">Signaler un problème</a>
       <a href="confidentialite.html">Privacy</a>
       <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-      <a href="connexion.html">Espace Membre</a>
     </nav>
     <div class="nav-right">
       <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
@@ -102,47 +48,111 @@
   </div>
 </header>
 
-<!-- Animation Canvas interactif -->
-<canvas id="hero-canvas"></canvas>
-
-<!-- Section Hero -->
-<section class="hero hero-interactive">
-  <div class="wrap" style="text-align: center;">
-    <h1 class="hero-title">Plateforme moderne de gestion & d'information</h1>
-    <p class="hero-desc" style="max-width: 650px; margin: 1rem auto 2rem;">
-      Police Management centralise vos outils, informations et suivis dans une interface rapide, fluide et accessible sur tous vos appareils.
-    </p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a href="connexion.html" class="btn primary">Accéder à l'Espace Membre</a>
-      <a href="fonctionnalites.html" class="btn secondary">Voir les fonctionnalités</a>
-    </div>
-  </div>
-</section>
-
-<!-- Section avec cartes 3D -->
-<section class="section hero-interactive" style="padding-top: 0;">
+<section class="section">
   <div class="wrap">
-    <div class="grid-interactive">
-      
-      <div class="card-3d">
-        <div class="card-3d-icon">⚡</div>
-        <h3>Haute Performance</h3>
-        <p>Une expérience réactive et optimisée pour charger en un instant, peu importe votre appareil.</p>
+    
+    <!-- Hero Section -->
+    <div class="hero-grid">
+      <div>
+        <span class="badge-tag">Application iOS Indépendante</span>
+        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;">L'outil de terrain conçu pour les patrouilleurs du Québec</h1>
+        <p style="color: var(--ink-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
+          Police Management regroupe la gestion d'horaire, les cartes de territoires, les lois québécoises hors ligne et des outils de calcul d'amendes au même endroit.
+        </p>
+        <div style="display:flex; gap:1rem; flex-wrap: wrap;">
+          <a class="btn primary" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">Télécharger sur l'App Store</a>
+          <a class="btn secondary" href="urgence.html">Signaler un problème</a>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <img src="images/terminal.jpg" alt="Terminal Police Management" style="max-width: 300px; width: 100%; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+      </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border); margin: 4rem 0;">
+
+    <!-- Présentation des fonctionnalités -->
+    <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+      <h2 class="section-title">Tout ce que fait l'application</h2>
+      <p class="section-desc">Une suite complète de fonctionnalités développées pour optimiser les quarts de travail et les opérations sur le terrain.</p>
+    </div>
+
+    <div class="features-grid">
+
+      <!-- 1. Terminal / Tableau de bord -->
+      <div class="feature-card">
+        <img src="images/terminal.jpg" alt="Terminal et Accès Rapide">
+        <h3>Terminal & Accès Rapide</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Un centre de contrôle épuré affichant le décompte de tes quarts à venir, les demandes à traiter et les annonces prioritaires. Donne un accès direct à tous les modules essentiels de l'application.
+        </p>
       </div>
 
-      <div class="card-3d">
-        <div class="card-3d-icon">🛡️</div>
-        <h3>Accès Securisé</h3>
-        <p>Gestion stricte des autorisations et protection des données d'accès membres.</p>
+      <!-- 2. Gestion d'Horaire -->
+      <div class="feature-card">
+        <img src="images/horaire.jpg" alt="Gestion d'Horaire">
+        <h3>Gestion de Rotation & Horaire</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Suivi complet de tes quarts de travail (Jour, Nuit, Formation, Repos, Férié). Planification en vues Mensuelle, Hebdomadaire ou sous forme de Liste adaptée aux cycles de rotation policiers.
+        </p>
       </div>
 
-      <div class="card-3d">
-        <div class="card-3d-icon">📲</div>
-        <h3>Disponible sur App Store</h3>
-        <p>Retrouvez l'application mobile dédiée directement sur iOS pour un accès rapide sur le terrain.</p>
+      <!-- 3. Carte des Territoires -->
+      <div class="feature-card">
+        <img src="images/carte.jpg" alt="Carte des Territoires">
+        <h3>Carte des Postes & Territoires</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Cartographie interactive repérant l'ensemble des postes de police au Québec (autoroutiers, municipaux, MRC, hybrides, auxiliaires et GRC) avec localisation des repères kilométriques.
+        </p>
+      </div>
+
+      <!-- 4. Lois & Règlements du Québec -->
+      <div class="feature-card">
+        <img src="images/lois.jpg" alt="Lois du Québec">
+        <h3>Lois du Québec (Hors ligne)</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Consultation intégrale et instantanée des textes de loi (Code de la sécurité routière, Véhicules hors route, Transport rémunéré, Sécurité nautique, Assurance auto) sans connexion Internet.
+        </p>
+      </div>
+
+      <!-- 5. Calculateur de vitesse -->
+      <div class="feature-card">
+        <img src="images/calculateur.jpg" alt="Calculateur de vitesse">
+        <h3>Calculateur de Vitesse & Amendes</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Outil de calcul instantané selon l'art. 516 du CSR. Calcule automatiquement l'excès de vitesse, l'amende de base, les frais judiciaires, la contribution et les points d'inaptitude selon les zones (Normale, Travaux, Scolaire).
+        </p>
+      </div>
+
+      <!-- 6. Forum CSR -->
+      <div class="feature-card">
+        <img src="images/forum.png" alt="Forum CSR">
+        <h3>Forum d'échange entre policiers</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Espace de discussion sécurisé réservé aux échanges professionnels concernant les infractions au CSR, l'émission de constats et la sécurité routière, dans le respect de la confidentialité.
+        </p>
+      </div>
+
+      <!-- 7. Boîte à idées -->
+      <div class="feature-card">
+        <img src="images/idees.png" alt="Boîte à Idées">
+        <h3>Sondages & Boîte à Idées</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Propose directement des fonctionnalités que tu aimerais voir dans l'application. Système de vote communautaire permettant aux meilleures idées d'être développées en priorité.
+        </p>
+      </div>
+
+      <!-- 8. Sécurité et Déverrouillage -->
+      <div class="feature-card">
+        <img src="images/menu.jpg" alt="Sécurité Face ID">
+        <h3>Sécurité & Biométrie</h3>
+        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
+          Protection des données de l'application par mot de passe et déverrouillage biométrique Face ID / Touch ID pour un accès rapide et confidentiel sur le terrain.
+        </p>
       </div>
 
     </div>
+
   </div>
 </section>
 
@@ -154,122 +164,13 @@
     </div>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
-      <a href="connexion.html">Espace Membre</a>
-      <a href="https://discord.gg/bgrJVwPqyV" target="_blank" rel="noopener">Discord</a>
+      <a href="urgence.html">Signaler un problème</a>
+      <a href="https://discord.gg/tpFYkftsW3" target="_blank" rel="noopener">Discord</a>
       <a href="confidentialite.html">Privacy</a>
     </div>
   </div>
 </footer>
 
 <script src="theme.js"></script>
-<script>
-  /* Particules Canvas dynamiques */
-  const canvas = document.getElementById('hero-canvas');
-  const ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  const particles = [];
-  const mouse = { x: null, y: null, radius: 140 };
-
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.x;
-    mouse.y = e.y;
-  });
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 1;
-      this.vx = (Math.random() - 0.5) * 0.8;
-      this.vy = (Math.random() - 0.5) * 0.8;
-    }
-
-    draw() {
-      ctx.fillStyle = 'rgba(59, 130, 246, 0.4)';
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-
-      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-
-      let dx = mouse.x - this.x;
-      let dy = mouse.y - this.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance < mouse.radius) {
-        const force = (mouse.radius - distance) / mouse.radius;
-        const directionX = dx / distance;
-        const directionY = dy / distance;
-        this.x -= directionX * force * 4;
-        this.y -= directionY * force * 4;
-      }
-    }
-  }
-
-  for (let i = 0; i < 65; i++) {
-    particles.push(new Particle());
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    for (let a = 0; a < particles.length; a++) {
-      for (let b = a; b < particles.length; b++) {
-        let dx = particles[a].x - particles[b].x;
-        let dy = particles[a].y - particles[b].y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 110) {
-          ctx.strokeStyle = `rgba(59, 130, 246, ${0.3 - dist / 360})`;
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[a].x, particles[a].y);
-          ctx.lineTo(particles[b].x, particles[b].y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
-    });
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  /* Effet Tilt 3D au survol des cartes */
-  const cards = document.querySelectorAll('.card-3d');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      
-      const tiltX = (y / rect.height) * -15;
-      const tiltY = (x / rect.width) * 15;
-
-      card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = `rotateX(0deg) rotateY(0deg)`;
-    });
-  });
-</script>
 </body>
 </html>
