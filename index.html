@@ -3,174 +3,571 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Police Management — Plateforme de gestion pour patrouilleurs</title>
+<title>Police Management — Gestion d'horaire et d'unité pour policiers</title>
+<meta name="description" content="Police Management : horaire et rotation, échange de quarts, carte des postes, calculateur de vitesse CSR, lois du Québec, forum et idées — pour les membres de la Sûreté du Québec et bientôt d'autres corps.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
 <style>
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; padding: 4rem 0; }
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
-  .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; text-align: left; }
-  .feature-card img { width: 100%; height: auto; border-radius: 12px; margin-bottom: 1.2rem; border: 1px solid var(--border); }
-  .badge-tag { display: inline-block; background: #3b82f620; color: #60a5fa; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; margin-bottom: 0.5rem; }
-  @media (max-width: 768px) {
-    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  :root{
+    --primary:#4F46E5;
+    --secondary:#7C3AED;
+    --ink:#0B1020;
+    --ink-soft:#4B5064;
+    --bg:#FFFFFF;
+    --bg-soft:#F6F6FB;
+    --border:#E7E7F1;
+    --card:#FFFFFF;
+    --radius:20px;
+    --max:1160px;
+    --shadow:0 10px 30px -12px rgba(15,15,40,.18);
   }
+  html.dark{
+    --ink:#F4F4FB;
+    --ink-soft:#B7B9CC;
+    --bg:#0A0B14;
+    --bg-soft:#111226;
+    --border:#22243B;
+    --card:#12142A;
+    --shadow:0 10px 30px -12px rgba(0,0,0,.6);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    transition:background .25s ease,color .25s ease;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+  .visually-hidden{position:absolute;left:-9999px}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:saturate(180%) blur(14px);
+    background:color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--max);margin:0 auto}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:-.01em}
+  .brand svg{width:30px;height:30px;flex:none}
+  .nav-links{display:flex;gap:28px;align-items:center}
+  .nav-links a{font-size:14px;font-weight:600;color:var(--ink-soft);transition:color .15s}
+  .nav-links a:hover{color:var(--primary)}
+  .nav-actions{display:flex;align-items:center;gap:10px}
+  .icon-btn{
+    width:38px;height:38px;border-radius:50%;border:1px solid var(--border);
+    background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .icon-btn svg{width:18px;height:18px}
+  .menu-toggle{display:none}
+  .mobile-menu{display:none;flex-direction:column;padding:10px 24px 18px;border-bottom:1px solid var(--border);background:var(--bg)}
+  .mobile-menu a{padding:12px 4px;font-size:15px;font-weight:600;color:var(--ink-soft);border-top:1px solid var(--border)}
+  .mobile-menu a:first-child{border-top:none}
+  .mobile-menu.open{display:flex}
+  @media (max-width:820px){
+    .nav-links{display:none}
+    .menu-toggle{display:flex}
+  }
+  @media (min-width:821px){
+    .mobile-menu{display:none !important}
+  }
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:999px;font-weight:700;font-size:14.5px;
+    cursor:pointer;border:1px solid transparent;white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;box-shadow:0 8px 22px -8px rgba(79,70,229,.55)}
+  .btn-ghost{background:var(--card);border-color:var(--border);color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#312E81 0%,var(--primary) 45%,var(--secondary) 100%);
+    color:#fff;padding:92px 0 60px;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(650px 400px at 85% 10%, rgba(255,255,255,.18), transparent 60%);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;position:relative;z-index:1}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;background:rgba(255,255,255,.14);
+    padding:7px 14px;border-radius:999px;margin-bottom:20px;
+  }
+  .eyebrow span.dot{width:6px;height:6px;border-radius:50%;background:#8CF5C0}
+  h1{font-size:clamp(34px,5vw,54px);line-height:1.08;font-weight:800;letter-spacing:-.02em;margin:0 0 18px}
+  .hero p.lead{font-size:18px;line-height:1.6;color:rgba(255,255,255,.86);max-width:520px;margin:0 0 30px}
+  @media (max-width:900px){.hero p.lead{margin-inline:auto}}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+  @media (max-width:900px){.hero-actions{justify-content:center}}
+  .hero .btn-ghost{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#fff}
+  .hero-badges{display:flex;gap:22px;margin-top:38px;flex-wrap:wrap}
+  @media (max-width:900px){.hero-badges{justify-content:center}}
+  .hero-badges .item{font-size:13px;color:rgba(255,255,255,.78);display:flex;align-items:center;gap:8px}
+  .hero-badges svg{width:16px;height:16px;flex:none}
+
+  .hero-phone{position:relative;display:flex;justify-content:center}
+  .hero-phone img{
+    width:min(300px,80%);border-radius:38px;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,.55);
+    transform:rotate(1.5deg);
+  }
+  .float-card{
+    position:absolute;background:rgba(255,255,255,.97);color:#1a1a2e;
+    border-radius:14px;padding:12px 16px;box-shadow:0 20px 40px -14px rgba(0,0,0,.35);
+    font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:10px;
+  }
+  .float-card svg{width:20px;height:20px;flex:none}
+  .float-card.c1{top:8%;left:-6%}
+  .float-card.c2{bottom:10%;right:-8%}
+  @media (max-width:640px){.float-card{display:none}}
+
+  /* ---------- Sections ---------- */
+  section{padding:88px 0}
+  .section-head{max-width:640px;margin:0 auto 52px;text-align:center}
+  .section-head .eyebrow{background:color-mix(in srgb, var(--primary) 12%, transparent);color:var(--primary)}
+  .section-head h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em;margin:0 0 14px;font-weight:800}
+  .section-head p{color:var(--ink-soft);font-size:16px;line-height:1.65;margin:0}
+  .bg-soft{background:var(--bg-soft)}
+
+  /* Feature grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media (max-width:940px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:620px){.grid{grid-template-columns:1fr}}
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px 24px;box-shadow:var(--shadow);
+    opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease;
+  }
+  .card.in{opacity:1;transform:none}
+  .card .ic{
+    width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));margin-bottom:16px;
+  }
+  .card .ic svg{width:23px;height:23px;color:#fff}
+  .card h3{font-size:17px;margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--ink-soft);font-size:14.5px;line-height:1.6}
+
+  /* Showcase (image + text alternating) */
+  .showcase{display:flex;flex-direction:column;gap:110px}
+  .show-row{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:center}
+  .show-row.rev{grid-template-columns:1.15fr .85fr}
+  .show-row.rev .show-text{order:2}
+  .show-row.rev .show-img{order:1}
+  @media (max-width:860px){
+    .show-row,.show-row.rev{grid-template-columns:1fr}
+    .show-row.rev .show-text{order:1}
+    .show-row.rev .show-img{order:2}
+  }
+  .show-img{display:flex;justify-content:center}
+  .show-img img{
+    width:min(280px,100%);border-radius:32px;box-shadow:0 30px 60px -20px rgba(15,15,40,.35);
+    border:1px solid var(--border);
+  }
+  .show-text .tag{
+    display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--primary);margin-bottom:12px;
+  }
+  .show-text h3{font-size:26px;font-weight:800;letter-spacing:-.02em;margin:0 0 14px}
+  .show-text p{color:var(--ink-soft);font-size:15.5px;line-height:1.7;margin:0 0 18px}
+  .show-text ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .show-text li{display:flex;gap:10px;font-size:14.5px;color:var(--ink-soft);align-items:flex-start}
+  .show-text li svg{width:18px;height:18px;flex:none;color:var(--primary);margin-top:1px}
+
+  /* Security section */
+  .security{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media (max-width:860px){.security{grid-template-columns:1fr}}
+  .security ul{list-style:none;margin:26px 0 0;padding:0;display:flex;flex-direction:column;gap:16px}
+  .security li{display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--ink-soft);line-height:1.55}
+  .security li b{color:var(--ink);font-weight:700}
+  .security .ic-round{
+    width:34px;height:34px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    background:color-mix(in srgb, var(--primary) 14%, transparent);color:var(--primary);
+  }
+  .security .ic-round svg{width:17px;height:17px}
+  .panel{
+    background:var(--card);border:1px solid var(--border);border-radius:24px;padding:34px;box-shadow:var(--shadow);
+  }
+  .panel h4{margin:0 0 6px;font-size:15px;color:var(--ink-soft);font-weight:600}
+  .panel .big{font-size:30px;font-weight:800;letter-spacing:-.02em;margin-bottom:22px}
+  .panel .row{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border);font-size:14px}
+  .panel .row:first-of-type{border-top:none}
+  .panel .row span:last-child{font-weight:700}
+
+  /* Corps de police chips */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .chip{
+    padding:9px 16px;border-radius:999px;border:1px solid var(--border);background:var(--card);
+    font-size:13.5px;font-weight:600;color:var(--ink-soft);
+  }
+  .chip.active{color:var(--primary);border-color:color-mix(in srgb, var(--primary) 45%, var(--border))}
+
+  /* CTA + footer */
+  .cta{
+    text-align:center;border-radius:32px;margin:0 24px;
+    background:linear-gradient(135deg,#312E81,var(--primary),var(--secondary));
+    color:#fff;padding:64px 32px;
+  }
+  .cta h2{font-size:clamp(24px,3.4vw,34px);margin:0 0 14px;font-weight:800;letter-spacing:-.02em}
+  .cta p{color:rgba(255,255,255,.85);max-width:520px;margin:0 auto 30px;font-size:15.5px;line-height:1.6}
+  .cta .hero-actions{justify-content:center}
+
+  footer{padding:56px 0 34px;border-top:1px solid var(--border)}
+  .foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+  .foot-brand{max-width:280px}
+  .foot-brand .brand{margin-bottom:10px}
+  .foot-brand p{color:var(--ink-soft);font-size:13.5px;line-height:1.6;margin:0}
+  .foot-col h5{font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin:0 0 14px}
+  .foot-col a{display:block;font-size:14px;margin-bottom:10px;color:var(--ink-soft)}
+  .foot-col a:hover{color:var(--primary)}
+  .foot-bottom{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--ink-soft)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
 </style>
 </head>
 <body>
 
-<header class="site-nav">
-  <div class="nav-row">
-    <a href="index.html" class="brand" style="text-decoration:none;">
-      <span class="badge-mark">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2L20 5.5V11C20 16 16.6 20.2 12 22C7.4 20.2 4 16 4 11V5.5L12 2Z" stroke="#ffffff" stroke-width="1.8" fill="none"/>
-        </svg>
-      </span>
+<header>
+  <nav>
+    <a href="#top" class="brand">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5l-8-3Z" fill="url(#g1)"/><path d="M12 2v20" stroke="rgba(255,255,255,.55)" stroke-width="1"/><defs><linearGradient id="g1" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
       Police Management
     </a>
-    <nav class="links">
-      <a href="index.html" class="active">Accueil</a>
-      <a href="fonctionnalites.html">Fonctionnalités</a>
-      <a href="urgence.html">Signaler un problème</a>
-      <a href="confidentialite.html">Privacy</a>
-      <a href="prochaine-mise-a-jour.html">Prochaine MàJ</a>
-    </nav>
-    <div class="nav-right">
-      <a class="nav-cta" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">App Store</a>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Changer de thème">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <div class="nav-links">
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#horaire">Horaire</a>
+      <a href="#securite">Sécurité</a>
+      <a href="#corps">Corps de police</a>
+      <a href="confidentialite.html">Confidentialité</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeToggle" aria-label="Basculer le mode sombre">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2 12h2.4M19.6 12H22M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></svg>
+      </button>
+      <a href="#contact" class="btn btn-primary" style="padding:9px 18px;font-size:13.5px">Nous joindre</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Ouvrir le menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#fonctionnalites">Fonctionnalités</a>
+    <a href="#horaire">Horaire</a>
+    <a href="#securite">Sécurité</a>
+    <a href="#corps">Corps de police</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="#contact">Contact</a>
   </div>
 </header>
 
-<section class="section">
-  <div class="wrap">
-    
-    <!-- Hero Section -->
-    <div class="hero-grid">
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero" style="padding-top:70px">
+    <div class="wrap hero-grid">
       <div>
-        <span class="badge-tag">Application iOS Indépendante</span>
-        <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem;">L'outil de terrain conçu pour les patrouilleurs du Québec</h1>
-        <p style="color: var(--ink-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
-          Police Management regroupe la gestion d'horaire, les cartes de territoires, les lois québécoises hors ligne et des outils de calcul d'amendes au même endroit.
-        </p>
-        <div style="display:flex; gap:1rem; flex-wrap: wrap;">
-          <a class="btn primary" href="https://apps.apple.com/ca/app/police-management/id6787241566?l=fr-CA" target="_blank" rel="noopener">Télécharger sur l'App Store</a>
-          <a class="btn secondary" href="urgence.html">Signaler un problème</a>
+        <span class="eyebrow"><span class="dot"></span> Conforme à la Loi 25 · Chiffré de bout en bout</span>
+        <h1>La gestion d'horaire pensée pour les policiers du Québec</h1>
+        <p class="lead">Rotation, échange de quarts, carte des postes, calculateur d'infractions du CSR, lois du Québec hors ligne, forum d'équipe et idées de nouveautés — tout dans une seule application, propre et rapide.</p>
+        <div class="hero-actions">
+          <a href="#fonctionnalites" class="btn btn-primary">Voir les fonctionnalités</a>
+          <a href="https://discord.gg/mcTzBhRKP" target="_blank" rel="noopener" class="btn btn-ghost">Rejoindre le Discord</a>
+        </div>
+        <div class="hero-badges">
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5l-8-3Z"/></svg> Chiffrement AES-256 &amp; Curve25519</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg> Données cloisonnées par corps</div>
+          <div class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M6 6a8 8 0 1 0 12 0"/></svg> Aucune publicité, aucun profilage</div>
         </div>
       </div>
-      <div style="text-align: center;">
-        <img src="images/terminal.jpg" alt="Terminal Police Management" style="max-width: 300px; width: 100%; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+      <div class="hero-phone">
+        <img src="assets/screenshots/lock.png" alt="Écran de déverrouillage de l'application Police Management">
+        <div class="float-card c1"><svg viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Rotation à jour</div>
+        <div class="float-card c2"><svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5l-8-3Z"/></svg> Verrouillé Face ID</div>
       </div>
     </div>
+  </section>
 
-    <hr style="border: 0; border-top: 1px solid var(--border); margin: 4rem 0;">
+  <!-- Feature grid -->
+  <section id="fonctionnalites">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Fonctionnalités</span>
+        <h2>Tout ce qu'il faut pour un quart de travail</h2>
+        <p>Une application unique pour ton horaire, la route et ton équipe — pensée pour être rapide à consulter en service.</p>
+      </div>
+      <div class="grid" id="featureGrid">
 
-    <!-- Présentation des fonctionnalités -->
-    <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-      <h2 class="section-title">Tout ce que fait l'application</h2>
-      <p class="section-desc">Une suite complète de fonctionnalités développées pour optimiser les quarts de travail et les opérations sur le terrain.</p>
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div>
+          <h3>Horaire &amp; rotation</h3>
+          <p>Calendrier mensuel, hebdomadaire ou en liste. Rotation automatique, catégories personnalisées, temps supplémentaire et deuxième calendrier pour ton conjoint ou ta conjointe.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <h3>Échange de quarts</h3>
+          <p>Offre un quart à ton poste, un collègue le prend en un geste — la première prise gagne, sans double réservation possible.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 20l-6-3V4l6 3 6-3 6 3v13l-6-3-6 3Zm0-13v13m6-16v13"/></svg></div>
+          <h3>Carte des postes</h3>
+          <p>Postes de la SQ, municipaux, hybrides et fédéraux du Québec et du Canada, repères kilométriques, sorties d'autoroute et territoires — géolocalisés hors ligne.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 13l3-3M9 3h6"/></svg></div>
+          <h3>Calculateur de vitesse</h3>
+          <p>Amende (art. 516 CSR), frais judiciaires, contribution pénale, réclamation totale et points d'inaptitude — zones normale, travaux et scolaire incluses.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg></div>
+          <h3>Lois du Québec</h3>
+          <p>Code de la sécurité routière, véhicules hors route, transport rémunéré, sécurité nautique et assurance automobile — textes intégraux, consultables hors ligne.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.5 8.5 0 1 1-3.8-7.1L21 3l-1.2 3.9c.8 1.3 1.2 2.9 1.2 4.6Z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
+          <h3>Forum CSR</h3>
+          <p>Discute des infractions au Code de la sécurité routière et de tes expériences d'émission de constats avec les collègues de ton corps.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-4 10.5c.6.6 1 1.3 1 2.5h6c0-1.2.4-1.9 1-2.5A6 6 0 0 0 12 2Z"/></svg></div>
+          <h3>Idées &amp; sondages</h3>
+          <p>Réponds aux sondages de l'administrateur, propose une nouveauté et vote pour celles des autres — les plus populaires montent en haut.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+          <h3>Administration</h3>
+          <p>Tableau de bord en direct, approbation ou refus des inscriptions, gestion des comptes, annonces et messages aux membres.</p>
+        </div>
+
+        <div class="card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="13.5" cy="6.5" r="3.5"/><path d="M17 10.5 21 14M11 9.5 3 17.5M13.5 12 20 18.5"/></svg></div>
+          <h3>Personnalisation</h3>
+          <p>Huit styles d'interface — Terminal MDT, Poste de police, Marine et plus — pour adapter l'accueil à ton goût.</p>
+        </div>
+
+      </div>
     </div>
+  </section>
 
-    <div class="features-grid">
+  <!-- Showcase alternating -->
+  <section class="bg-soft" id="horaire">
+    <div class="wrap showcase">
 
-      <!-- 1. Terminal / Tableau de bord -->
-      <div class="feature-card">
-        <img src="images/terminal.jpg" alt="Terminal et Accès Rapide">
-        <h3>Terminal & Accès Rapide</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Un centre de contrôle épuré affichant le décompte de tes quarts à venir, les demandes à traiter et les annonces prioritaires. Donne un accès direct à tous les modules essentiels de l'application.
-        </p>
+      <div class="show-row">
+        <div class="show-img reveal"><img src="assets/screenshots/horaire.png" alt="Écran Mon horaire, vue mensuelle"></div>
+        <div class="show-text reveal">
+          <span class="tag">Horaire</span>
+          <h3>Ton horaire, toujours à jour</h3>
+          <p>Vue mois, semaine ou liste. Ta rotation se remplit automatiquement; ajoute congés, formations et jours fériés en un toucher. Une Live Activity affiche ton quart en cours directement sur l'écran verrouillé.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Deuxième calendrier pour ton conjoint ou ta conjointe, jamais partagé</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Export vers le calendrier iOS en un geste</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Horaire d'équipe partagé, sans tes notes personnelles</li>
+          </ul>
+        </div>
       </div>
 
-      <!-- 2. Gestion d'Horaire -->
-      <div class="feature-card">
-        <img src="images/horaire.jpg" alt="Gestion d'Horaire">
-        <h3>Gestion de Rotation & Horaire</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Suivi complet de tes quarts de travail (Jour, Nuit, Formation, Repos, Férié). Planification en vues Mensuelle, Hebdomadaire ou sous forme de Liste adaptée aux cycles de rotation policiers.
-        </p>
+      <div class="show-row rev">
+        <div class="show-img reveal"><img src="assets/screenshots/carte.png" alt="Carte des postes de police du Québec et du Canada"></div>
+        <div class="show-text reveal">
+          <span class="tag">Carte SQ</span>
+          <h3>Chaque poste, à portée de main</h3>
+          <p>Postes autoroutiers, municipaux, hybrides et auxiliaires, quartiers généraux et unités spécialisées, repères kilométriques et sorties d'autoroute — le tout géolocalisé et fonctionnel hors ligne.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Territoires autoroutiers et de postes en superposition</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> Ta position reste sur ton appareil — jamais transmise</li>
+          </ul>
+        </div>
       </div>
 
-      <!-- 3. Carte des Territoires -->
-      <div class="feature-card">
-        <img src="images/carte.jpg" alt="Carte des Territoires">
-        <h3>Carte des Postes & Territoires</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Cartographie interactive repérant l'ensemble des postes de police au Québec (autoroutiers, municipaux, MRC, hybrides, auxiliaires et GRC) avec localisation des repères kilométriques.
-        </p>
+      <div class="show-row">
+        <div class="show-img reveal"><img src="assets/screenshots/calculateur.png" alt="Calculateur de vitesse et de constat"></div>
+        <div class="show-text reveal">
+          <span class="tag">Routière</span>
+          <h3>Le bon montant, tout de suite</h3>
+          <p>Entre la limite et la vitesse mesurée : amende selon l'article 516 du CSR, frais judiciaires, contribution pénale, réclamation totale et points d'inaptitude — zones travaux et scolaires prises en compte.</p>
+        </div>
       </div>
 
-      <!-- 4. Lois & Règlements du Québec -->
-      <div class="feature-card">
-        <img src="images/lois.jpg" alt="Lois du Québec">
-        <h3>Lois du Québec (Hors ligne)</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Consultation intégrale et instantanée des textes de loi (Code de la sécurité routière, Véhicules hors route, Transport rémunéré, Sécurité nautique, Assurance auto) sans connexion Internet.
-        </p>
+      <div class="show-row rev">
+        <div class="show-img reveal"><img src="assets/screenshots/lois.png" alt="Section Lois du Québec"></div>
+        <div class="show-text reveal">
+          <span class="tag">Lois QC</span>
+          <h3>Les textes de loi, hors ligne</h3>
+          <p>Code de la sécurité routière, véhicules hors route, transport rémunéré de personnes, sécurité nautique fédérale et assurance automobile — recherche par article ou par mot-clé, sans connexion requise.</p>
+        </div>
       </div>
 
-      <!-- 5. Calculateur de vitesse -->
-      <div class="feature-card">
-        <img src="images/calculateur.jpg" alt="Calculateur de vitesse">
-        <h3>Calculateur de Vitesse & Amendes</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Outil de calcul instantané selon l'art. 516 du CSR. Calcule automatiquement l'excès de vitesse, l'amende de base, les frais judiciaires, la contribution et les points d'inaptitude selon les zones (Normale, Travaux, Scolaire).
-        </p>
+      <div class="show-row">
+        <div class="show-img reveal"><img src="assets/screenshots/forum.png" alt="Forum CSR de l'application"></div>
+        <div class="show-text reveal">
+          <span class="tag">Forum</span>
+          <h3>L'expérience de tes collègues</h3>
+          <p>Un espace réservé aux membres de ton corps pour échanger sur les infractions et l'émission de constats — aucune donnée sur des civils, chaque publication peut être signalée à l'administrateur.</p>
+        </div>
       </div>
 
-      <!-- 6. Forum CSR -->
-      <div class="feature-card">
-        <img src="images/forum.png" alt="Forum CSR">
-        <h3>Forum d'échange entre policiers</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Espace de discussion sécurisé réservé aux échanges professionnels concernant les infractions au CSR, l'émission de constats et la sécurité routière, dans le respect de la confidentialité.
-        </p>
-      </div>
-
-      <!-- 7. Boîte à idées -->
-      <div class="feature-card">
-        <img src="images/idees.png" alt="Boîte à Idées">
-        <h3>Sondages & Boîte à Idées</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Propose directement des fonctionnalités que tu aimerais voir dans l'application. Système de vote communautaire permettant aux meilleures idées d'être développées en priorité.
-        </p>
-      </div>
-
-      <!-- 8. Sécurité et Déverrouillage -->
-      <div class="feature-card">
-        <img src="images/menu.jpg" alt="Sécurité Face ID">
-        <h3>Sécurité & Biométrie</h3>
-        <p style="color: var(--ink-dim); font-size: 0.95rem; margin-top: 0.5rem;">
-          Protection des données de l'application par mot de passe et déverrouillage biométrique Face ID / Touch ID pour un accès rapide et confidentiel sur le terrain.
-        </p>
+      <div class="show-row rev">
+        <div class="show-img reveal"><img src="assets/screenshots/idees.png" alt="Section Idées, sondages et demandes de nouveautés"></div>
+        <div class="show-text reveal">
+          <span class="tag">Idées</span>
+          <h3>L'app évolue avec vous</h3>
+          <p>Vote aux sondages de l'administrateur, propose une nouveauté et appuie les idées des autres — les demandes les plus populaires montent naturellement en haut de la liste.</p>
+        </div>
       </div>
 
     </div>
+  </section>
 
-  </div>
-</section>
+  <!-- Security -->
+  <section id="securite">
+    <div class="wrap security">
+      <div class="reveal">
+        <span class="eyebrow">Sécurité &amp; confidentialité</span>
+        <h2 style="font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.02em;margin:16px 0 0">Construite pour des données sensibles</h2>
+        <ul>
+          <li><span class="ic-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5l-8-3Z"/></svg></span>
+            <span><b>Chiffrement de bout en bout.</b> Clé publique Curve25519 par membre; photo de profil, horaire partagé, forum, idées, sondages, échanges de quarts et commentaires sont chiffrés en AES-256-GCM avant l'envoi.</span></li>
+          <li><span class="ic-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg></span>
+            <span><b>Face ID &amp; mot de passe salé.</b> Verrouillage biométrique de l'app, mot de passe jamais conservé en clair (hachage SHA-256 salé).</span></li>
+          <li><span class="ic-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18 13 13 0 0 1 0-18Z"/></svg></span>
+            <span><b>Cloisonnement par corps de police.</b> Chaque corps ne voit que ses propres membres, son horaire et son forum — jamais ceux d'un autre corps.</span></li>
+          <li><span class="ic-round"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/></svg></span>
+            <span><b>Conforme à la Loi 25.</b> Consentement explicite conservé comme preuve, droits d'accès et de suppression, aucune vente ni communication de données à des tiers, aucune publicité ni profilage.</span></li>
+        </ul>
+      </div>
+      <div class="panel reveal">
+        <h4>Ce qui n'est jamais collecté</h4>
+        <div class="big">Zéro analyse, zéro pub</div>
+        <div class="row"><span>Traçage publicitaire</span><span>Aucun</span></div>
+        <div class="row"><span>Outils d'analyse tiers</span><span>Aucun</span></div>
+        <div class="row"><span>Vente de données</span><span>Jamais</span></div>
+        <div class="row"><span>Position GPS transmise</span><span>Jamais</span></div>
+        <div class="row"><span>Hébergement</span><span>Apple iCloud / CloudKit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Corps de police -->
+  <section class="bg-soft" id="corps">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Corps de police</span>
+        <h2>Pensée pour la Sûreté du Québec</h2>
+        <p>Pleinement fonctionnelle pour la Sûreté du Québec. D'autres corps canadiens sont déjà listés et en cours d'intégration — ceux non disponibles peuvent envoyer une demande directement depuis l'app.</p>
+      </div>
+      <div class="chips reveal">
+        <span class="chip active">Sûreté du Québec</span>
+        <span class="chip">GRC</span>
+        <span class="chip">SPVM — Montréal</span>
+        <span class="chip">SPVQ — Québec</span>
+        <span class="chip">Police de Laval</span>
+        <span class="chip">Police de Longueuil</span>
+        <span class="chip">Police de Gatineau</span>
+        <span class="chip">Police de Sherbrooke</span>
+        <span class="chip">Police provinciale de l'Ontario</span>
+        <span class="chip">+ plusieurs autres</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="cta reveal">
+      <h2>Une question, une suggestion?</h2>
+      <p>L'équipe derrière Police Management répond directement — par courriel, téléphone ou sur le Discord de soutien.</p>
+      <div class="hero-actions" id="contact">
+        <a href="mailto:police.management@hotmail.com" class="btn btn-primary" style="background:#fff;color:var(--primary);box-shadow:none">Écrire un courriel</a>
+        <a href="https://discord.gg/mcTzBhRKP" target="_blank" rel="noopener" class="btn btn-ghost">Discord de soutien</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  <div class="wrap footer-row">
-    <div>
-      <div class="footer-brand">Police Management</div>
-      <p class="footer-disclaimer">Application indépendante, non affiliée à un corps de police ni à un organisme gouvernemental.</p>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="brand">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 11 4.6-2.6 8-6 8-11V5l-8-3Z" fill="url(#g2)"/><defs><linearGradient id="g2" x1="4" y1="2" x2="20" y2="22"><stop stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs></svg>
+          Police Management
+        </a>
+        <p>Application indépendante — affiliée à aucune entreprise ni à aucun corps de police. Créée par Anthony Smith.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Application</h5>
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#securite">Sécurité</a>
+        <a href="#corps">Corps de police</a>
+      </div>
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <a href="mailto:police.management@hotmail.com">police.management@hotmail.com</a>
+        <a href="tel:4384959849">438 495-9849</a>
+        <a href="https://discord.gg/mcTzBhRKP" target="_blank" rel="noopener">Discord de soutien</a>
+      </div>
+      <div class="foot-col">
+        <h5>Légal</h5>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <a href="index.html">Accueil</a>
-      <a href="urgence.html">Signaler un problème</a>
-      <a href="https://discord.gg/tpFYkftsW3" target="_blank" rel="noopener">Discord</a>
-      <a href="confidentialite.html">Privacy</a>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Police Management. Tous droits réservés.</span>
+      <span>Fait au Québec 🇨🇦</span>
     </div>
   </div>
 </footer>
 
-<script src="theme.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Theme toggle
+  const root = document.documentElement;
+  const stored = localStorage.getItem('pm-theme');
+  if (stored === 'dark' || (!stored && matchMedia('(prefers-color-scheme: dark)').matches)) {
+    root.classList.add('dark');
+  }
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    root.classList.toggle('dark');
+    localStorage.setItem('pm-theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobileMenu');
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+  }));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .card').forEach(el => io.observe(el));
+</script>
+
 </body>
 </html>
